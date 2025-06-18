@@ -54,11 +54,13 @@ install_slc_cli()
         os_type="mac"
     fi
 
-    local zip_url="https://www.silabs.com/documents/login/software/slc_cli_${os_type}.zip"
+    local zip_url="https://firmware.level.co/slc_cli_${os_type}.zip"
     mkdir -p "${SLC_INSTALL_DIR}"
     pushd "${SLC_INSTALL_DIR}"
-    local zip_path="./slc_cli.zip"
-    wget "${zip_url}" -O "${zip_path}"
+    local zip_path="./slc_cli_{os_type}.zip"
+    if [ ! -f "${zip_path}" ]; then
+       wget "${zip_url}" -O "${zip_path}"
+    fi
     unzip -q -o "${zip_path}" -d "$(dirname ${zip_path})" && rm "${zip_path}"
     popd
 
